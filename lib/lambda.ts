@@ -24,14 +24,14 @@ export class Lambda extends Construct {
   private createLambda(name: string, props: LambdaProps) {
     const nodeJsFunctionProps: lambdaNodeJs.NodejsFunctionProps = {
       bundling: {
-        externalModules: ["aws-sdk"],
+        externalModules: ["@aws-sdk/"],
       },
       depsLockFilePath: path.join(__dirname, "../lambdas", "package-lock.json"),
       environment: {
         PRIMARY_KEY: props.partitionKey,
         TABLE_NAME: props.tableName,
       },
-      runtime: lambda.Runtime.NODEJS_16_X,
+      runtime: lambda.Runtime.NODEJS_18_X,
     };
 
     return new lambdaNodeJs.NodejsFunction(this, name, {
