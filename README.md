@@ -62,3 +62,17 @@ Let's create an item via the API.
   Type `20230711` in Path `{id}`, then scroll down to the bottom of the page and click `Test`
 
   ![get_items](./assets/get_item.png)
+
+If you are a command line lover, find out the `API key` and `Invoke URL` then run the following curl command to test:
+
+```
+curl -X POST -d '{ "id": "20230712", "topic": "EKS Blueprints" }' -H "x-api-key: <API_KEY_PLACEHOLDER>" -H "Content-Type: application/json" <INVOKE_URL_HOLDER>/item
+
+item has been created successfully
+```
+
+```
+curl -X GET -H "x-api-key: <API_KEY_PLACEHOLDER>" -H "Content-Type: application/json" <INVOKE_URL_HOLDER>/items
+
+[{"id":"20230711","topic":"ALD pattern introduction"},{"id":"20230712","topic":"EKS Blueprints"}]
+```

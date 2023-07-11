@@ -31,6 +31,18 @@ export class ALDStack extends cdk.Stack {
       stageName: props.stageName,
     }).api;
 
+    const plan = scheduleApi.addUsagePlan("UsagePlan", {
+      name: "Easy",
+      throttle: {
+        rateLimit: 5,
+        burstLimit: 2,
+      },
+    });
+
+    const key = scheduleApi.addApiKey("ApiKey");
+    plan.addApiKey(key);
+    plan.addApiStage({ stage: scheduleApi.deploymentStage });
+
     scheduleTable.grantReadWriteData(scheduleLambda.createItem);
     scheduleTable.grantReadData(scheduleLambda.getItem);
     scheduleTable.grantReadData(scheduleLambda.getItems);
@@ -42,13 +54,13 @@ export class ALDStack extends cdk.Stack {
     const getItems = new apiGw.LambdaIntegration(scheduleLambda.getItems);
 
     const items = scheduleApi.root.addResource("items");
-    items.addMethod("GET", getItems);
+    items.addMethod("GET", getItems, { apiKeyRequired: true });
     addCorsOptions(items);
 
     const item = scheduleApi.root.addResource("item");
-    item.addMethod("POST", createItem);
+    item.addMethod("POST", createItem, { apiKeyRequired: true });
     const itemId = item.addResource("{id}");
-    itemId.addMethod("GET", getItem);
+    itemId.addMethod("GET", getItem, { apiKeyRequired: true });
     addCorsOptions(item);
   }
 }
