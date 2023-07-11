@@ -76,3 +76,15 @@ curl -X GET -H "x-api-key: <API_KEY_PLACEHOLDER>" -H "Content-Type: application/
 
 [{"id":"20230711","topic":"ALD pattern introduction"},{"id":"20230712","topic":"EKS Blueprints"}]
 ```
+
+_Note: If you don't have an AWS account, [LocalStack](https://github.com/localstack/localstack) is the way to go_.
+
+```
+python3 -m pip install localstack awscli-local
+localstack start -d
+localstack status service
+
+npm install -g aws-cdk-local aws-cdk
+cdklocal bootstrap
+cdklocal deploy
+```
