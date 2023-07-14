@@ -12,7 +12,16 @@ The template comes with a couple sample APIs to demostrate how to composite comp
 
 - /item
 
-  - POST: create a new item
+  - POST: create a new item with pre-defined user data schema
+
+    ```
+    # id is required, topic is optional
+
+    {
+      "id": string,
+      "topic": string
+    }
+    ```
 
 - /item/{id}
   - GET: get a specific item
