@@ -4,7 +4,6 @@ import { Construct } from "constructs";
 import { DynamoDb } from "./dynamodb";
 import { Lambda } from "./lambda";
 import { ApiGateway } from "./api-gateway";
-import { table } from "console";
 
 export interface ALDStackProps extends cdk.StackProps {
   tableName: string;

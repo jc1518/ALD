@@ -1,10 +1,6 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { Operation } from "./lib/operation";
 
 const TABLE_NAME = process.env.TABLE_NAME!;
-
-const dbClient = new DynamoDBClient({});
-const docClient = DynamoDBDocumentClient.from(dbClient);
 
 export const handler = async (event: any = {}): Promise<any> => {
   if (!event.body) {
@@ -23,18 +19,6 @@ export const handler = async (event: any = {}): Promise<any> => {
     Item: item,
   };
 
-  try {
-    const command = new PutCommand(params);
-    await docClient.send(command);
-    return {
-      statusCode: 200,
-      body: "item has been created successfully",
-    };
-  } catch (err) {
-    console.error(err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify(err),
-    };
-  }
+  const operation = new Operation();
+  return operation.createItem(params);
 };
